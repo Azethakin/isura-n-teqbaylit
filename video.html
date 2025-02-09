@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture Vidéo | Isura n Teqbaylit</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <!-- 🔹 Barre de navigation -->
+    <header>
+        <h1><a href="index.html">Isura n Teqbaylit</a></h1>
+        <button id="dark-mode-toggle">🌙 Mode Sombre</button>
+    </header>
+
+    <!-- 🎬 Zone de lecture vidéo -->
+    <main>
+        <div class="video-container">
+            <video id="video-player" controls autoplay>
+                <source id="video-source" src="" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+        </div>
+
+        <!-- 📌 Liste des épisodes -->
+        <aside class="episode-list">
+            <h2>Épisodes</h2>
+            <ul id="episode-links">
+                <!-- Les épisodes seront chargés dynamiquement -->
+            </ul>
+        </aside>
+    </main>
+
+    <!-- 🔹 Pied de page -->
+    <footer>
+        <p>&copy; 2025 Isura n Teqbaylit - Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // 📌 Récupération des paramètres d'URL pour charger la vidéo sélectionnée
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const videoUrl = urlParams.get("video");
+            const title = urlParams.get("title");
+
+            if (videoUrl) {
+                document.getElementById("video-source").src = videoUrl;
+                document.getElementById("video-player").load();
+            }
+
+            if (title) {
+                document.title = `Lecture : ${title} | Isura n Teqbaylit`;
+            }
+
+            // Charger les épisodes associés
+            loadEpisodes();
+        });
+
+        // 🎬 Charger dynamiquement la liste des épisodes
+        function loadEpisodes() {
+            const episodes = [
+                { title: "Épisode 1", videoUrl: "https://example.com/video1.mp4" },
+                { title: "Épisode 2", videoUrl: "https://example.com/video2.mp4" },
+                { title: "Épisode 3", videoUrl: "https://example.com/video3.mp4" }
+            ];
+
+            let episodeList = document.getElementById("episode-links");
+            episodeList.innerHTML = "";
+
+            episodes.forEach(ep => {
+                let li = document.createElement("li");
+                let link = document.createElement("a");
+                link.href = `video.html?video=${encodeURIComponent(ep.videoUrl)}&title=${encodeURIComponent(ep.title)}`;
+                link.textContent = ep.title;
+                li.appendChild(link);
+                episodeList.appendChild(li);
+            });
+        }
+    </script>
+
+</body>
+</html>
